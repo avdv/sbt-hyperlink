@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -eEuCo pipefail || exit 2
+
+# options and default values
+declare -i INTELLIJ_PORT="${INTELLIJ_PORT:-63342}"
+declare -i INTELLIJ_REMOTE_CALL_PORT="${INTELLIJ_REMOTE_CALL_PORT:-8091}"
+declare TERMLINK_APP="xdgOpen"
+
+declare -r CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/termlink/config"
+
+[ -e "$CONFIG" ] && source "$CONFIG"
+
+# no need to modify anything below this line
+readonly INTELLIJ_PORT INTELLIJ_REMOTE_CALL_PORT TERMLINK_APP
+
+shopt -s extglob
+
+# Open file in GNU Emacs using emacsclient
+function emacs() {
+    local -r FILE="${1%%:+([0-9])?(:+([0-9]))}"
+    local -r POS="${1:${#FILE}+1}"
+
+    exec emacsclient -n ${POS:++}${POS} "${FILE}"
+}
+
+# IntelliJ Remote Call plugin (deprecated, use `intellij`)
+#
+# see https://plugins.jetbrains.com/plugin/6027-remote-call
+function intellijRemoteCall() {
+    exec 5<> /dev/tcp/localhost/$INTELLIJ_PORT
+    printf 'GET /?message=%s HTTP/1.0\r\n\r\n' "$1" >&5 5>>/dev/null
+    exec 5<&- 5>&-
+}
+
+# IntelliJ REST API
+#
+# see http://www.develar.org/idea-rest-api/#api-Platform-file
+#
+function intellij() {
+    exec 5<> /dev/tcp/localhost/$INTELLIJ_PORT
+    printf 'GET /api/file/%s HTTP/1.0\r\nORIGIN: http://localhost\r\n\r\n' "$1" >&5 5>>/dev/null
+    exec 5<&- 5>&-
+}
+
+function xdgOpen() {
+    local -r FILE="${1%%:+([0-9])?(:+([0-9]))}"
+
+    exec xdg-open "$FILE"
+}
+
+######
+
+declare -r URL="$1"
+
+if [[ "$URL" =~ termlink://(.*) ]]; then
+    "$TERMLINK_APP" "${BASH_REMATCH[1]}"
+else
+    echo "unsupported URL: $URL"
+    exit 1
+fi

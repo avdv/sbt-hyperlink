@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Terminal hyperlink handler
+Exec=termlink %u
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/termlink;
