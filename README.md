@@ -41,7 +41,7 @@ src/main/scala/sbthyperlink/HyperlinkPlugin.scala:36:1: not found: value xxx
 Clicking on these links opens the file using the default application associated with the file type.
  
 Unfortunately, that method does not support specifying the line and column number to open. If you want to position the 
-cursor at the specified line (or column), have a look at the [termlink](termlink/README.md) folder.
+cursor at the specified line (or column), have a look at [termlink](termlink/README.md).
 
 ### Testing
 
