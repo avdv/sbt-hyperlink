@@ -7,10 +7,10 @@ A plugin to hyperlink files from error messages on the console
 
 Before:
 
-![before](before.png)
+![before](media/before.png)
 
 After:
-![after](after.png)
+![after](media/after.png)
 
 Clicking the link opens your editor at the referenced line and column.
 
