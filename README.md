@@ -1,4 +1,7 @@
-# sbt hyperlink plugin
+# sbt hyperlink plugin [![travis-badge][]][travis]
+
+[travis]:       https://travis-ci.org/avdv/sbt-hyperlink
+[travis-badge]: https://travis-ci.org/avdv/sbt-hyperlink.svg?branch=master
 
 A plugin to hyperlink files from error messages on the console
 
