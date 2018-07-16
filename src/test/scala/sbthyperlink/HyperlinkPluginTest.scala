@@ -4,7 +4,7 @@ import scala.util.matching.Regex
 
 import utest._
 
-object HyperlinkTest extends TestSuite {
+object HyperlinkPluginTest extends TestSuite {
   val tests = Tests {
     'testFileAction - {
       val r = "(/abc)/(test)/(hello.scala):(\\d+:\\d+)".r("basedir", "path", "file", "pos")
