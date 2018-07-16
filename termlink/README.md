@@ -2,7 +2,7 @@
 
 Script and `.desktop` file for custom `termlink://` protocol links. 
 
-The handler can be configured to do anything with such a link, but 
+The handler can be configured to do anything with such a link, but usually opens the referenced file in your preferred editor.
 
 ## Usage
 
@@ -11,5 +11,3 @@ Put the `termlink` script into your path. Copy the `termlink.desktop` file to th
 ## Configuration
 
 Copy the `termlink.conf` to `$XDG_CONFIG_HOME/termlink/config` and edit it to your liking.
-
-## 
