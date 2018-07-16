@@ -43,6 +43,12 @@ Clicking on these links opens the file using the default application associated 
 Unfortunately, that method does not support specifying the line and column number to open. If you want to position the 
 cursor at the specified line (or column), have a look at [termlink](termlink/).
 
+When you want to use the `termlink` helper, simply add this to `~/.sbt/1.0/global.sbt`:
+
+```scala
+hyperlinkAction := sbthyperlink.TermlinkAction
+```
+
 ### Testing
 
 Run `test` for regular unit tests.
