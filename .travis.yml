@@ -9,11 +9,12 @@ script:
 
 sudo: false
 
-# https://docs.travis-ci.com/user/languages/java/
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
+# https://docs.travis-ci.com/user/languages/java/#Updating-Oracle-JDK-8-to-a-recent-release
+# to use the latest Oracle JDK 8:
+#addons:
+#  apt:
+#    packages:
+#      - oracle-java8-installer
 
 before_cache:
   # Tricks to avoid unnecessary cache updates
