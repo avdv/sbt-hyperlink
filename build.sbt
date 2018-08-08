@@ -3,7 +3,7 @@ organization := "de.cbley"
 
 licenses := Seq("MIT" -> url("https://github.com/avdv/sbt-hyperlink/blob/master/LICENSE"))
 
-sbtPlugin := true
+enablePlugins(SbtPlugin)
 
 // utest
 libraryDependencies += "com.lihaoyi" %% "utest" % "0.6.4" % Test
