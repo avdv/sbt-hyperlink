@@ -1,6 +1,6 @@
 conditions: v1
 
-if: type = pull_request OR tag IS present
+if: branch = master OR tag IS present
 
 language: scala
 
