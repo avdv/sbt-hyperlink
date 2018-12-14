@@ -9,7 +9,8 @@ jdk:
 
 script:
   ## runs both regular tests and sbt-scripted integration tests
-  - sbt -Dfile.encoding=UTF8 test scripted
+  - sbt -Dfile.encoding=UTF8 coverage test coverageReport coveralls
+  - sbt -Dfile.encoding=UTF8 scripted
 
 sudo: false
 
