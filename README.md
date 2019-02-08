@@ -1,7 +1,10 @@
-# sbt hyperlink plugin [![travis-badge][]][travis]
+# sbt hyperlink plugin [![travis-badge][]][travis] [![bintray-badge][]][bintray]
 
 [travis]:       https://travis-ci.org/avdv/sbt-hyperlink
 [travis-badge]: https://travis-ci.org/avdv/sbt-hyperlink.svg?branch=master
+
+[bintray]:       https://bintray.com/sbt/sbt-plugin-releases/sbt-release/_latestVersion
+[bintray-badge]: https://img.shields.io/bintray/v/sbt/sbt-plugin-releases/sbt-hyperlink.svg?style=for-the-badge
 
 A plugin to hyperlink files from error messages on the console
 
