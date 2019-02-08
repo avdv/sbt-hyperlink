@@ -1,4 +1,4 @@
-# sbt hyperlink plugin [![travis-badge][]][travis] [![bintray-badge][]][bintray]
+# SBT Hyperlink [![travis-badge][]][travis] [![bintray-badge][]][bintray]
 
 [travis]:       https://travis-ci.org/avdv/sbt-hyperlink
 [travis-badge]: https://img.shields.io/travis/avdv/sbt-hyperlink.svg?label=travis&style=for-the-badge
