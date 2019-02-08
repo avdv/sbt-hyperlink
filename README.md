@@ -1,7 +1,7 @@
 # sbt hyperlink plugin [![travis-badge][]][travis] [![bintray-badge][]][bintray]
 
 [travis]:       https://travis-ci.org/avdv/sbt-hyperlink
-[travis-badge]: https://travis-ci.org/avdv/sbt-hyperlink.svg?branch=master
+[travis-badge]: https://img.shields.io/travis/avdv/sbt-hyperlink.svg?label=travis&style=for-the-badge
 
 [bintray]:       https://bintray.com/sbt/sbt-plugin-releases/sbt-release/_latestVersion
 [bintray-badge]: https://img.shields.io/bintray/v/sbt/sbt-plugin-releases/sbt-hyperlink.svg?style=for-the-badge
