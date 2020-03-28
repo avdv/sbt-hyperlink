@@ -21,8 +21,8 @@ trait HyperlinkAction {
   */
 object TermlinkAction extends HyperlinkAction {
   override def apply(m: Regex.Match) = m match {
-    case Regex.Groups(basedir, path, file, pos) =>
-      Some(s"termlink://$basedir/$path/$file:$pos" -> s"$path/$file:$pos")
+    case Regex.Groups(basedir, subpath, pos) =>
+      Some(s"termlink://$basedir/$subpath:$pos" -> s"$subpath:$pos")
     case _ => None
   }
 }
@@ -34,9 +34,27 @@ object TermlinkAction extends HyperlinkAction {
   */
 object FileAction extends HyperlinkAction {
   override def apply(m: Regex.Match) = m match {
+    case Regex.Groups(basedir, subpath, pos) =>
+      Some(s"file://$basedir/$subpath" -> s"$subpath:$pos")
     case Regex.Groups(basedir, path, file, pos) =>
       Some(s"file://$basedir/$path/$file" → s"$path/$file:$pos")
     case _ => None
+  }
+}
+
+object Default {
+  def regex(basedir: File): Regex = {
+  s"""(?x)
+         # basedir
+         (${Regex.quote(basedir.getAbsolutePath)})
+         /+
+         # subpath + file - relative to the basedir
+         ((?:[^/:]+/+)*  [^/:]+)
+         :
+         # pos - LINE[:COLUMN]
+         (\\d+(?::\\d+)?)
+         # a colon next
+         (?=:)""".r("basedir", "subpath", "pos")
   }
 }
 
@@ -63,22 +81,7 @@ object HyperlinkPlugin extends AutoPlugin {
   }
 
   override lazy val projectSettings = Seq(
-    hyperlinkRegex := {
-      val basedir = baseDirectory.value
-      s"""(?x)
-         # basedir
-         (${Regex.quote(basedir.getAbsolutePath)})
-         # path - relative to the basedir
-         ((?:/+[^/:]+)*)
-         /
-         # file - the name of the file
-         ([^/:]+)
-         :
-         # pos - LINE[:COLUMN]
-         (\\d+(?::\\d+)?)
-         # a colon next
-         (?=:)""".stripMargin.r("basedir", "path", "file", "pos")
-    },
+    hyperlinkRegex := Default.regex(baseDirectory.value),
     hyperlinkAction := FileAction,
     logManager := {
       LogManager.withScreenLogger {
