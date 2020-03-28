@@ -5,7 +5,7 @@ if: branch = master OR tag IS present
 language: scala
 
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 script:
   ## runs both regular tests and sbt-scripted integration tests
