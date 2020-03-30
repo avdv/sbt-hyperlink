@@ -18,6 +18,7 @@ jobs:
       name: "Scripted Test"
       script: sbt -Dfile.encoding=UTF8 scripted
     - stage: Deploy
+      script: true
       deploy:
         provider: script
         script: sbt -Dfile.encoding=UTF8 publish
