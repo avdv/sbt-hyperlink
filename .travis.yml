@@ -1,4 +1,6 @@
-conditions: v1
+dist: bionic
+
+os: linux
 
 if: branch = master OR tag IS present
 
@@ -7,19 +9,25 @@ language: scala
 jdk:
   - openjdk8
 
-script:
-  ## runs both regular tests and sbt-scripted integration tests
-  - sbt -Dfile.encoding=UTF8 coverage test coverageReport coveralls
-  - sbt -Dfile.encoding=UTF8 scripted
+jobs:
+  include:
+    - stage: Test
+      name: "Test & Coverage"
+      script: sbt -Dfile.encoding=UTF8 coverage test coverageReport coveralls
+    - stage: Test
+      name: "Scripted Test"
+      script: sbt -Dfile.encoding=UTF8 scripted
+    - stage: Deploy
+      deploy:
+        provider: script
+        script: sbt -Dfile.encoding=UTF8 publish
+        cleanup: false
+        edge: true
 
-sudo: false
-
-# https://docs.travis-ci.com/user/languages/java/#Updating-Oracle-JDK-8-to-a-recent-release
-# to use the latest Oracle JDK 8:
-#addons:
-#  apt:
-#    packages:
-#      - oracle-java8-installer
+stages:
+  - Test
+  - name: Deploy
+    if: repo = avdv/sbt-hyperlink AND tag =~ /^v[0-9]+(\.[0-9]+){2}$/
 
 before_cache:
   # Tricks to avoid unnecessary cache updates
@@ -31,9 +39,3 @@ cache:
   directories:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot/
-
-deploy:
-  if: tag =~ /^v[0-9]+(\.[0-9]+){2}$/
-  provider: script
-  script: sbt -Dfile.encoding=UTF8 publish
-  skip_cleanup: true
