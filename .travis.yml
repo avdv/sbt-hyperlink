@@ -23,6 +23,8 @@ jobs:
         script: sbt -Dfile.encoding=UTF8 publish
         cleanup: false
         edge: true
+        on:
+          tags: true
 
 stages:
   - Test
