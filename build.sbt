@@ -8,7 +8,7 @@ enablePlugins(SbtPlugin)
 scalaVersion in ThisBuild := "2.12.8"
 
 // utest
-libraryDependencies += "com.lihaoyi" %% "utest" % "0.6.4" % Test
+libraryDependencies += "com.lihaoyi" %% "utest" % "0.7.4" % Test
 testFrameworks += new TestFramework("utest.runner.Framework")
 
 bintrayPackageLabels := Seq("sbt","plugin")
