@@ -37,14 +37,14 @@ object FileAction extends HyperlinkAction {
     case Regex.Groups(basedir, subpath, pos) =>
       Some(s"file://$basedir/$subpath" -> s"$subpath:$pos")
     case Regex.Groups(basedir, path, file, pos) =>
-      Some(s"file://$basedir/$path/$file" → s"$path/$file:$pos")
+      Some(s"file://$basedir/$path/$file" -> s"$path/$file:$pos")
     case _ => None
   }
 }
 
 object Default {
   def regex(basedir: File): Regex = {
-  s"""(?x)
+    s"""(?x)
          # basedir
          (${Regex.quote(basedir.getAbsolutePath)})
          /+
@@ -65,8 +65,7 @@ object HyperlinkPlugin extends AutoPlugin {
 
   object autoImport {
     val hyperlinkRegex = settingKey[Regex]("A regex which matches specific parts to be hyperlinked")
-    val hyperlinkAction = settingKey[HyperlinkAction](
-      """This function is given each match of the regular expression.
+    val hyperlinkAction = settingKey[HyperlinkAction]("""This function is given each match of the regular expression.
         |
         |It should return a tuple of Strings, the first is the target URI and the
         |second is the link text, or None if the match should not be hyperlinked.
@@ -105,22 +104,21 @@ object HyperlinkPlugin extends AutoPlugin {
       val withScreenLoggerMethodSymbol = logManagerType.decl(ru.TermName("withScreenLogger")).asMethod
       val withScreenLogger = logManager.reflectMethod(withScreenLoggerMethodSymbol)
 
-      withScreenLogger({
-        (_: ScopedKey[_], state: State) ⇒
-          val extracted = Project.extract(state)
-          val action: HyperlinkAction = extracted.get(hyperlinkAction)
-          val regex: Regex = extracted.get(hyperlinkRegex)
+      withScreenLogger { (_: ScopedKey[_], state: State) =>
+        val extracted = Project.extract(state)
+        val action: HyperlinkAction = extracted.get(hyperlinkAction)
+        val regex: Regex = extracted.get(hyperlinkRegex)
 
-          defaultScreen(ConsoleOut.printWriterOut(new PrintWriter(System.out) {
-            private def filter(s: String) =
-              if (ConsoleAppender.formatEnabledInEnv)
-                regex.replaceSomeIn(s, action(_).map(hyperlink))
-              else
-                s
+        defaultScreen(ConsoleOut.printWriterOut(new PrintWriter(System.out) {
+          private def filter(s: String) =
+            if (ConsoleAppender.formatEnabledInEnv)
+              regex.replaceSomeIn(s, action(_).map(hyperlink))
+            else
+              s
 
-            override def print(s: String): Unit = super.print(filter(s))
-          }))
-      }).asInstanceOf[LogManager]
+          override def print(s: String): Unit = super.print(filter(s))
+        }))
+      }.asInstanceOf[LogManager]
     }
   )
 }

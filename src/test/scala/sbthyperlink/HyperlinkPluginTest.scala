@@ -40,9 +40,11 @@ object HyperlinkPluginTest extends TestSuite {
       assert(subpath == "test/hello.scala", pos == "55:3")
     }
     'testDefaultRegex - {
-      val m = Default.regex(new File("/abc")).findFirstMatchIn(
-        """[info] /abc/src/main/scala/Main.scala:48: Missing final modifier on case class"""
-      )
+      val m = Default
+        .regex(new File("/abc"))
+        .findFirstMatchIn(
+          """[info] /abc/src/main/scala/Main.scala:48: Missing final modifier on case class"""
+        )
 
       assert(m.isDefined)
 
