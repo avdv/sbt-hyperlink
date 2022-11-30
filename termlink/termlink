@@ -16,12 +16,25 @@ readonly INTELLIJ_PORT INTELLIJ_REMOTE_CALL_PORT TERMLINK_APP
 
 shopt -s extglob
 
+function has() {
+    type "$1" &>/dev/null
+}
+
 # Open file in GNU Emacs using emacsclient
 function emacs() {
     local -r FILE="${1%%:+([0-9])?(:+([0-9]))}"
     local -r POS="${1:${#FILE}+1}"
 
     exec emacsclient -n ${POS:++}${POS} "${FILE}"
+}
+
+# Open file in Visual Studio Code / Codium
+function vscode() {
+    local CODE=code
+    if has codium; then
+      CODE=codium
+    fi
+    exec "$CODE" --goto "$1"
 }
 
 # IntelliJ Remote Call plugin (deprecated, use `intellij`)
